@@ -1,0 +1,12 @@
+package daily.prog;
+
+public class GraphRadiusDiameter {
+	
+	public int ecc(int node){
+		return null;
+	}
+	
+	public static void main(){
+		
+	}
+}

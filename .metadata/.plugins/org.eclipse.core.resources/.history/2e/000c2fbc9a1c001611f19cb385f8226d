@@ -1,0 +1,36 @@
+package daily.prog;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class GraphRadiusDiameter {
+	
+	public static int sampleNode[] = {6,0,1,1,2,2,5,1,3,3,4,0,4};
+	public static Map<Integer, Integer> m = new HashMap<Integer, Integer>();
+	
+	public static void main(String args[]){
+		fillMap(sampleNode);
+		System.out.println("Radius: " + rad(m));
+		System.out.println("Diameter: " + diam(m));
+	}
+	
+	public static void fillMap(int[] sampleNode){
+		for (int i = 1; i < sampleNode[0]; i+=2){
+			m.put(sampleNode[i], sampleNode[i+1]);
+		}
+	}
+	
+	public static int ecc(Map<Integer, Integer> m){
+		return 0;
+	}
+
+	private static String diam(Map<Integer, Integer> m2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private static String rad(Map<Integer, Integer> m2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}
