@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.util.Random;
 
 //Go to class where everything will be handled.
 public class Game extends Canvas implements Runnable {
@@ -15,8 +16,24 @@ public class Game extends Canvas implements Runnable {
 	private Thread thread;
 	private boolean running = false;
 	
+	private HUD hud;
+	//used to create enemies in random locations
+	private Random r;
+	private Spawn spawner;
+	
+	public Handler handler;
+	
 	public Game(){
+		handler = new Handler();
+		this.addKeyListener(new KeyInput(handler));
+		
 		new Window(WIDTH, HEIGHT, "Let's Build a Game!", this);
+		hud = new HUD();
+		r = new Random();
+		spawner = new Spawn(handler, hud);
+		
+		handler.addObject(new Player(WIDTH/2+32, HEIGHT/2+32, ID.Player, handler));
+		handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.Enemy, handler));
 	}
 	
 	public synchronized void start(){
@@ -35,6 +52,7 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	public void run(){
+		this.requestFocus();
 		long lastTime = System.nanoTime();
 		double amountOfTicks = 60.0;
 		double ns = 1000000000 / amountOfTicks;
@@ -63,7 +81,9 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	private void tick(){
-		
+		handler.tick();
+		hud.tick();
+		spawner.tick();
 	}
 	
 	private void render(){
@@ -77,8 +97,21 @@ public class Game extends Canvas implements Runnable {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
+		handler.render(g);
+		hud.render(g);
 		g.dispose();
 		bs.show();
+	}
+	
+	public static int clamp(int var, int min, int max){
+		if (var >= max){
+			return var = max;
+		} else if (var <= min){
+			return var = min;
+		} else {
+			return var;
+		}
+		
 	}
 	
 	public static void main(String args[]){

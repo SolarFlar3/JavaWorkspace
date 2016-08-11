@@ -1,0 +1,30 @@
+package com.tutorial.main;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class BasicEnemy extends GameObject {
+
+	public BasicEnemy(int x, int y, ID id) {
+		this.velX = 4;
+		this.velY = 4;
+		super(x, y, id);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void tick() {
+		if (this.x == Game.WIDTH + 16 || this.x == 0) velX = -velX;
+		if (this.x == Game.WIDTH + 16 || this.x == 0) velX = -velX;
+		x += velX;
+		y += velY;
+	}
+
+	@Override
+	public void render(Graphics g) {
+		g.setColor(Color.RED);
+		g.fillRect(x, y, 16, 16);
+		
+	}
+
+}
