@@ -5,14 +5,14 @@ import java.awt.Graphics;
 
 public class HUD {
 
-	public static int HEALTH = 100;
-	private int greenValue = 255;
+	public static float HEALTH = 100;
+	private float greenValue = 255;
 	
 	private int score = 0, level = 1;
 	
 	public void tick(){
-		HEALTH = Game.clamp(HEALTH, 0, 100);
-		greenValue = Game.clamp(greenValue, 0, 255);
+		HEALTH = Game.clamp(HEALTH, (float)0, (float)100);
+		greenValue = Game.clamp(greenValue, (float)0, (float)255);
 		greenValue = HEALTH*2;
 		
 		score++;
@@ -21,8 +21,8 @@ public class HUD {
 	public void render(Graphics g){
 		g.setColor(Color.darkGray);
 		g.fillRect(15, 15, 204, 32);
-		g.setColor(new Color(90, greenValue, 0));
-		g.fillRect(17, 17, HEALTH*2, 28);
+		g.setColor(new Color(90, (int)greenValue, 0));
+		g.fillRect(17, 17, (int)HEALTH*2, 28);
 		
 		g.setColor(Color.white);
 		g.drawString("Score: " + score, 15, 64);

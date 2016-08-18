@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 public class KeyInput extends KeyAdapter {
 
 	private Handler handler;
-	
+	private static int keysPressed;
 	private boolean wPressed = false, aPressed = false, sPressed = false, dPressed = false;
 	
 	public KeyInput(Handler handler){
@@ -23,20 +23,28 @@ public class KeyInput extends KeyAdapter {
 				//key events for player 1
 				
 				if (key == KeyEvent.VK_W && wPressed == false){
-					tempObject.setVelY(tempObject.getVelY()-Player.getSpeed());
 					wPressed = true;
+					keysPressed++;
+					if(wPressed && sPressed) tempObject.setVelY(0);
+					else tempObject.setVelY(-Player.getSpeed());
 				}
 				if (key == KeyEvent.VK_S && sPressed == false){
-					tempObject.setVelY(tempObject.getVelY()+Player.getSpeed());
+					keysPressed++;
 					sPressed = true;
+					if(wPressed && sPressed) tempObject.setVelY(0);
+					else tempObject.setVelY(Player.getSpeed());
 				}
 				if (key == KeyEvent.VK_A && aPressed == false){
-					tempObject.setVelX(tempObject.getVelX()-Player.getSpeed());
+					keysPressed++;
 					aPressed = true;
+					if(aPressed && dPressed) tempObject.setVelX(0);
+					else tempObject.setVelX(-Player.getSpeed());
 				}
 				if (key == KeyEvent.VK_D && dPressed == false){
-					tempObject.setVelX(tempObject.getVelX()+Player.getSpeed());
+					keysPressed++;
 					dPressed = true;
+					if(aPressed && dPressed) tempObject.setVelX(0);
+					else tempObject.setVelX(Player.getSpeed());
 				}
 			}
 			
@@ -45,7 +53,7 @@ public class KeyInput extends KeyAdapter {
 			}
 		}
 	}
-	
+
 	public void keyReleased(KeyEvent e){
 		int key = e.getKeyCode();
 		
@@ -56,22 +64,35 @@ public class KeyInput extends KeyAdapter {
 				//key events for player 1
 				
 				if (key == KeyEvent.VK_W){
-					tempObject.setVelY(tempObject.getVelY()+Player.getSpeed());
+					keysPressed--;
 					wPressed = false;
+					tempObject.setVelY(0);
 				}
 				if (key == KeyEvent.VK_S){
-					tempObject.setVelY(tempObject.getVelY()-Player.getSpeed());
+					keysPressed--;
 					sPressed = false;
+					tempObject.setVelY(0);
 				}
 				if (key == KeyEvent.VK_A){
-					tempObject.setVelX(tempObject.getVelX()+Player.getSpeed());
+					keysPressed--;
 					aPressed = false;
+					tempObject.setVelX(0);
 				}
 				if (key == KeyEvent.VK_D){
-					tempObject.setVelX(tempObject.getVelX()-Player.getSpeed());
+					keysPressed--;
 					dPressed = false;
+					tempObject.setVelX(0);
 				}
 			}
 		}
+	}
+	
+	public static int getKeysPressed(){
+		return keysPressed;
+	}
+	
+	public static void tick(){
+		if (getKeysPressed() == 2) Player.setSpeed((float)2.8);
+		else Player.setSpeed(4);
 	}
 }

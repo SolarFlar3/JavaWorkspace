@@ -1,0 +1,101 @@
+package com.tutorial.main;
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+public class KeyInput extends KeyAdapter {
+
+	private Handler handler;
+	int keysPressed;
+	private boolean wPressed = false, aPressed = false, sPressed = false, dPressed = false;
+	
+	public KeyInput(Handler handler){
+		this.handler = handler;
+	}
+	
+	public void keyPressed(KeyEvent e){
+		int key = e.getKeyCode();
+		
+		for(int i = 0; i < handler.object.size(); i++){
+			GameObject tempObject = handler.object.get(i);
+			
+			if(tempObject.getID() == ID.Player){
+				//key events for player 1
+				
+				if (key == KeyEvent.VK_W && wPressed == false){
+					wPressed = true;
+					if(wPressed && sPressed) tempObject.setVelY(0);
+					else if (keysPressed == 2) tempObject.setVelY((float)(Player.getSpeed() * .7))
+					tempObject.setVelY(Player.getSpeed());
+				}
+				if (key == KeyEvent.VK_S && sPressed == false){
+					//keysPressed++;
+					//changeSpeedForDiagonalMovement();
+					tempObject.setVelY(Player.getSpeed());
+					sPressed = true;
+				}
+				if (key == KeyEvent.VK_A && aPressed == false){
+					//keysPressed++;
+					//changeSpeedForDiagonalMovement();
+					tempObject.setVelX(Player.getSpeed());
+					aPressed = true;
+				}
+				if (key == KeyEvent.VK_D && dPressed == false){
+					//keysPressed++;
+					//changeSpeedForDiagonalMovement();
+					tempObject.setVelX(Player.getSpeed());
+					dPressed = true;
+				}
+			}
+			
+			if(key == KeyEvent.VK_ESCAPE){
+				System.exit(1);
+			}
+		}
+	}
+	
+	private void changeSpeedForDiagonalMovement() {
+		if(keysPressed == 2){
+			Player.setSpeed((float)2.8);
+		} else {
+			Player.setSpeed(4);
+		}
+	}
+
+	public void keyReleased(KeyEvent e){
+		int key = e.getKeyCode();
+		
+		for(int i = 0; i < handler.object.size(); i++){
+			GameObject tempObject = handler.object.get(i);
+			
+			if(tempObject.getID() == ID.Player){
+				//key events for player 1
+				
+				if (key == KeyEvent.VK_W){
+					//changeSpeedForDiagonalMovement();
+					//keysPressed--;
+					tempObject.setVelY(0);
+					wPressed = false;
+				}
+				if (key == KeyEvent.VK_S){
+					//changeSpeedForDiagonalMovement();
+					//keysPressed--;
+					tempObject.setVelY(0);
+					sPressed = false;
+				}
+				if (key == KeyEvent.VK_A){
+					//changeSpeedForDiagonalMovement();
+					//keysPressed--;
+					tempObject.setVelX(0);
+					aPressed = false;
+				}
+				if (key == KeyEvent.VK_D){
+					//changeSpeedForDiagonalMovement();
+					//keysPressed--;
+					tempObject.setVelX(0);
+					dPressed = false;
+				}
+			}
+		}
+	}
+}

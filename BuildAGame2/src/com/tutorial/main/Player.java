@@ -10,13 +10,13 @@ public class Player extends GameObject{
 
 	private Random r = new Random();
 	int counter = 0;
-	private static int speed;
+	private static float speed;
 	private Handler handler;
 	
 	public Player(int x, int y, ID id, Handler handler) {
 		super(x, y, id);
 		this.handler = handler;
-		speed = 4;
+		speed = (float) 4.0;
 	}
 
 	@Override
@@ -24,8 +24,8 @@ public class Player extends GameObject{
 		x += velX;
 		y += velY;
 		
-		x = Game.clamp(x,  0,  Game.WIDTH-37);
-		y = Game.clamp(y,  0,  Game.HEIGHT-60);	
+		x = Game.clamp((int)x,  0,  Game.WIDTH-37);
+		y = Game.clamp((int)y,  0,  Game.HEIGHT-60);	
 		
 		collision();
 	}
@@ -45,20 +45,20 @@ public class Player extends GameObject{
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.white);
-		g.fillRect(x, y, 32, 32);
+		g.fillRect((int)x, (int)y, 32, 32);
 		
 	} 
 	
-	public static void setSpeed(int speed){
+	public static void setSpeed(float speed){
 		Player.speed = speed;
 	}
-	public static int getSpeed(){
+	public static float getSpeed(){
 		return speed;
 	}
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, 32, 32);
+		return new Rectangle((int)x, (int)y, 32, 32);
 	}
 
 }

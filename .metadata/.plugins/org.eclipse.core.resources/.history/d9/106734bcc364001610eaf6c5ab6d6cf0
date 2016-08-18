@@ -1,0 +1,47 @@
+package com.tutorial.main;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class HUD {
+
+	public static int HEALTH = 100;
+	private int greenValue = 255;
+	
+	private int score = 0, level = 1;
+	
+	public void tick(){
+		HEALTH = Game.clamp((float)HEALTH, 0.0f, 100);
+		greenValue = Game.clamp((float)greenValue, 0.0f, 255);
+		greenValue = HEALTH*2;
+		
+		score++;
+	}
+	
+	public void render(Graphics g){
+		g.setColor(Color.darkGray);
+		g.fillRect(15, 15, 204, 32);
+		g.setColor(new Color(90, greenValue, 0));
+		g.fillRect(17, 17, HEALTH*2, 28);
+		
+		g.setColor(Color.white);
+		g.drawString("Score: " + score, 15, 64);
+		g.drawString("Level: " + level, 15, 80);
+	}
+	
+	public void setScore(int score){
+		this.score = score;
+	}
+	
+	public int getScore(){
+		return score;
+	}
+	
+	public void setLevel(int level){
+		this.level = level;
+	}
+	
+	public int getLevel(){
+		return level;
+	}
+}
